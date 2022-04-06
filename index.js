@@ -7,6 +7,10 @@ const servidor = app.listen(8080, () => {
     console.log('Servidor iniciado en el puerto 8080');
 });
 
+servidor.on("error", (err) => {
+    console.log(err);
+})
+
 class Contenedor {
     constructor(ruta) {
         this.id = 1,
@@ -81,6 +85,11 @@ let c = new Contenedor("./productos.json");
 function numeroRandom(min, max){
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+
+app.get("/", (req, res) => {
+    res.send(`<h1 style="color:red">Hola Coders!</h1>`);
+})
 app.get("/productos", (req, res) => {
     let productos = c.getAll();
     res.json({
