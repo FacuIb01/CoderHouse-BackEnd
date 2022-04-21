@@ -1,0 +1,31 @@
+{{>header }} 
+
+{{#if lista}}
+    <table class="table">
+    <thead>   
+        <tr>
+        <th scope="col">id</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Imagen</th>
+        </tr>
+    <tbody>
+    {{#each  productos}}
+        <tr>
+            <th scope="row">{{this.id}}</th>
+            <td>{{this.nombre}}</td>
+            <td>{{this.precio}}</td>
+            <td> <img src="{{this.img}}" alt="" style="width: 2rem"></td>
+        </tr>
+    {{/each}}
+    </tbody>
+    </thead>
+    </table>
+    {{else}}
+    <h1>No hay productos</h1>
+{{/if}}
+
+
+
+
+
