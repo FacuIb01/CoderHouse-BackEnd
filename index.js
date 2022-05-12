@@ -91,11 +91,6 @@ let c = new Contenedor("./productos.json");
 
 
 
-// let producto1 = {nombre: "Leche", precio: "5", img: "img.jpg"};
-// let producto2 = {nombre: "Huevo", precio: "15", img: "img.jpg"};
-// let producto3 = {nombre: "Gomitas", precio: "10", img: "img.jpg"};
-
-
 
 
 

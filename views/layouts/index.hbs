@@ -16,14 +16,14 @@
         if(url == 'http://localhost:8080/'){
         socket.on("productos", function(data){
             const lista = document.getElementById("productosLista");
+            console.log(data)
             const html = data.map((e) => {
-                
                 return (`<tr><th scope=""row"">${e.id}</th><td>${e.nombre}</td><td>${e.precio}</td><td><img src="${e.img}" alt="" style="width: 2rem"></td></tr>`)
-            }).join(" ");
+            }).join(" ")
 
             lista.innerHTML = html;
-        });
             
+            })
         }else{
         socket.on("mensajes", (data) => {
             const mensajes = document.getElementById("mensajesChat");
@@ -51,11 +51,12 @@
         }
 
         const enviarMensaje = ()=>{
-            let nombre = document.getElementById("email").value
+            let nombre = document.getElementById("nombreChat").value
             let mensaje = document.getElementById("mensaje").value
             const data = {
                 autor: nombre,
-                mensaje: mensaje
+                mensaje: mensaje,
+                date: Date.now().toString()
             }
             socket.emit("enviarMensaje", data);
         }

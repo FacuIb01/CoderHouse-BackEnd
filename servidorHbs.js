@@ -1,5 +1,6 @@
 const Chat = require('./chat.js');
-const c = require('./index.js');
+const {productosDB} = require("./productosDB.js");
+const { mensajeria } = require("./mensajesDB.js");
 const express = require('express');
 const handlebars = require('express-handlebars');
 const {Server: IOServer } = require('socket.io');
@@ -37,19 +38,21 @@ app.set('views', './views');
 
 // })
 
-io.on('connection', (socket) => {
-    console.log("Nueva conexion");
-    socket.emit('productos', c.getAll());
-    socket.emit("mensajes", chat.getAll());
+const productos = productosDB.getAll(); 
 
-    socket.on('agregarProducto', (data) => {
-        c.save(data)
-        io.sockets.emit('productos', c.getAll());
+io.on('connection',  async (socket) => {
+    console.log("Nueva conexion");
+    socket.emit('productos', await productos);
+    socket.emit("mensajes", await mensajeria.getAll());
+
+    socket.on('agregarProducto', async (data) => {
+        await productosDB.save(data);
+        socket.emit('productos', await productos);
     })
 
-    socket.on('enviarMensaje', (data) => {
-        chat.save(data)
-        io.sockets.emit("mensajes", chat.getAll());
+    socket.on('enviarMensaje', async (data) => {
+        await mensajeria.save(data);
+        io.sockets.emit("mensajes", await mensajeria.getAll());
     })
 
 })
@@ -60,12 +63,12 @@ httpServer.listen(8080, () => {
 });
 
 app.get('/', (req, res) => {
-    let productos = c.getAll();
-    // if(productos.length > 0) {
-    res.render('productos', {productos, lista: true})
-    // } else {
-        // res.render('productos', {productos: [], lista: false})
-    // }
+    try{
+        res.render('productos', {productos: productos, lista: true})
+    }catch(err){
+        console.log(err);
+    }
+
 })
 
 app.get("/Chat", (req, res) => {
