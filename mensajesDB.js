@@ -25,23 +25,16 @@ class MensajeriaDB{
             await this.knex(this.tabla).insert(objeto);
         }catch(error){
             console.log(error)
-        }finally{
-        this.knex.destroy();
         }
     }
     getAll = async () => {
-        try {
             const mensajes = await this.knex(this.tabla).select("*")
-            console.log(mensajes)
-            return mensajes;
-        }  catch (error) {
-            console.log(error)
-        } finally {
-            this.knex.destroy();
-        }
-    }
-}
+            .then(res => {return res})
+            .catch(error => {console.log(error)});
 
+            return mensajes;
+        }
+}
 
 const mensajeria = new MensajeriaDB(optionsSQLite, 'mensajes');
 // mensajeria.crearTabla('mensajes');

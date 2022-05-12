@@ -7,7 +7,7 @@ class ProductosDB {
         this.tabla = tabla;
     }
 
-    async crearTabla(tabla){
+    async crearTabla(){
         try {
             await this.knex.schema.createTable(this.tabla, table => {
                 table.increments('id').primary();
@@ -18,8 +18,6 @@ class ProductosDB {
             .then(res => {console.log("tabla creada")})
         } catch (error) {
             console.log(error)
-        }finally{
-            this.knex.destroy();
         }
     }
 
@@ -37,8 +35,6 @@ class ProductosDB {
             
         } catch (error) {
             console.log(error)
-        }finally{
-            this.knex.destroy();
         }
     }
 
@@ -48,8 +44,6 @@ class ProductosDB {
             return producto;
         } catch (error) {
             console.log(error)
-        }finally{
-            this.knex.destroy();
         }
     }
 
@@ -62,8 +56,6 @@ class ProductosDB {
             return productos;
         } catch (error) {
             console.error(error)
-        }finally{
-            this.knex.destroy();
         }
     }
     
@@ -72,8 +64,6 @@ class ProductosDB {
             await this.knex(this.tabla).where("id", "=", id).del();
         } catch (error) {
             console.log(error)
-        }finally{
-            this.knex.destroy();
         }
     }
 
@@ -82,8 +72,6 @@ class ProductosDB {
             this.knex(this.tabla).del();
         } catch (error) {
             console.log(error)
-        }finally{
-            this.knex.destroy();
         }
     }
 }

@@ -16,7 +16,6 @@
         if(url == 'http://localhost:8080/'){
         socket.on("productos", function(data){
             const lista = document.getElementById("productosLista");
-            console.log(data)
             const html = data.map((e) => {
                 return (`<tr><th scope=""row"">${e.id}</th><td>${e.nombre}</td><td>${e.precio}</td><td><img src="${e.img}" alt="" style="width: 2rem"></td></tr>`)
             }).join(" ")
@@ -27,6 +26,7 @@
         }else{
         socket.on("mensajes", (data) => {
             const mensajes = document.getElementById("mensajesChat");
+            console.log(data)
             const html = data.map((e) => {
                 return (`<div><strong style="color:blue">${e.autor}</strong><p style="color:brown;">${e.date.toString()}</p><I style="color: green">${e.mensaje}</I></div>`)
             }).join(" ");

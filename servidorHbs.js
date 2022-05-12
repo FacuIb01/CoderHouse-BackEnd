@@ -27,32 +27,29 @@ app.set('view engine', 'hbs');
 app.set('views', './views');
 
 
-// servidor.on("error", (err) => {
-//     console.log(err);
-// })
 
-// app.use(function(req, res, next) {
-//     res.status(500).json({
-//         error: "producto no encontrado"
-//     })
 
-// })
-
-const productos = productosDB.getAll(); 
 
 io.on('connection',  async (socket) => {
+    const productos = await productosDB.getAll(); 
+    const mensajes = await mensajeria.getAll();
+    console.log
+
     console.log("Nueva conexion");
-    socket.emit('productos', await productos);
-    socket.emit("mensajes", await mensajeria.getAll());
+    socket.emit('productos', productos);
+    socket.emit("mensajes", mensajes);
 
     socket.on('agregarProducto', async (data) => {
         await productosDB.save(data);
-        socket.emit('productos', await productos);
+
+        socket.emit('productos', await productosDB.getAll());
     })
 
     socket.on('enviarMensaje', async (data) => {
         await mensajeria.save(data);
-        io.sockets.emit("mensajes", await mensajeria.getAll());
+        let mensajes = await mensajeria.getAll();
+        console.log(mensajes)
+        io.sockets.emit("mensajes", mensajes);
     })
 
 })
@@ -64,7 +61,7 @@ httpServer.listen(8080, () => {
 
 app.get('/', (req, res) => {
     try{
-        res.render('productos', {productos: productos, lista: true})
+        res.render('productos', { lista: true})
     }catch(err){
         console.log(err);
     }
