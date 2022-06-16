@@ -1,5 +1,18 @@
 const fs = require('fs');
 const { json } = require('stream/consumers');
+const { schema, normalize, } = require('normalizr');
+const utils = require('util');
+
+const authorSchema = new schema.Entity('autores',{}, { idAttribute: 'email' });
+
+const authorsSchema = new schema.Entity('authors', {
+    author:  authorSchema,
+});
+
+const mensajesSchema = new schema.Entity('mensajes', {
+    mensajes: [authorsSchema]
+})
+
 
 class Contenedor {
     constructor(ruta) {
@@ -8,18 +21,11 @@ class Contenedor {
     }
 
     save(objeto){
-        let data = fs.readFileSync(this.ruta, 'utf8');
-        objeto.id = this.id;
-        if(data.length == 0){
-            let array = [objeto];
-            fs.writeFileSync(this.ruta, JSON.stringify(array,null,2));
-        }
-        else{
+            let data = fs.readFileSync(this.ruta, 'utf8');
+            objeto.id = this.id;
             let array = JSON.parse(data);
-            array.push(objeto);
+            array[0].mensajes.push(objeto);
             fs.writeFileSync(this.ruta, JSON.stringify(array,null,2));
-        }
-        this.id++
     }
 
     update(id, objetoNuevo){
@@ -62,7 +68,8 @@ class Contenedor {
         try{
             let data = fs.readFileSync(this.ruta, 'utf8');
             let array = JSON.parse(data);
-            return array
+            let normalizado = normalize(array[0], mensajesSchema);
+            return normalizado
         }catch(err){
             return console.log("algo fallo!, solucionalo crack, te dejo el error: \n" + err);
         }
@@ -89,11 +96,23 @@ class Contenedor {
 let c = new Contenedor("./productos.json");
 
 
+const chat = new Contenedor("./chat.json");
+
+let mensaje1 ={
+    author:{
+        email: "rodrigo@gmail.com",
+        nombre: "Rodrigo",
+        apellido: "Perez",
+        edad: "25",
+        alias: "rodrigo",
+        avatar: "https://randomuser.me/api/portraits/"
+    },
+    mensaje: "Hola, como estas?"
+}
+
+console.log(utils.inspect(chat.getAll(), true, 3, true))
 
 
-
-
-
-module.exports = c
+module.exports = c, chat;
 
 

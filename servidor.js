@@ -1,4 +1,4 @@
-const c = require('./index.js');
+const c = require('./contenedorArchivo.js');
 const express = require('express');
 const {Router} = express;
 const app = express();
@@ -20,7 +20,6 @@ servidor.on("error", (err) => {
 })
 
 app.use(function(req, res, next) {
-    console.log(err)
     res.status(500).json({
         error: "producto no encontrado"
     })

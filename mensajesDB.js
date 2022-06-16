@@ -30,8 +30,7 @@ class MensajeriaDB{
     getAll = async () => {
             const mensajes = await this.knex(this.tabla).select("*")
             .then(res => {return res})
-            .catch(error => {console.log(error)});
-
+            .catch(error => {console.log(error)});        
             return mensajes;
         }
 }

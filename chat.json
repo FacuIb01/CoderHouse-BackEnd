@@ -1,2 +1,19 @@
 [
+  {
+    "id": "mensajes",
+    "mensajes": [
+      {
+        "id": "1",
+        "author": {
+          "email": "rodrigo@gmail.com",
+          "nombre": "Rodrigo",
+          "apellido": "Perez",
+          "edad": "25",
+          "alias": "rodrigo",
+          "avatar": "https://randomuser.me/api/portraits/"
+        },
+        "mensaje": "Hola, como estas?"
+      }
+    ]
+  }
 ]

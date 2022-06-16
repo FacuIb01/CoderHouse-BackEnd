@@ -1,6 +1,7 @@
 const Chat = require('./chat.js');
 const {productosDB} = require("./productosDB.js");
 const { mensajeria } = require("./mensajesDB.js");
+
 const express = require('express');
 const handlebars = require('express-handlebars');
 const {Server: IOServer } = require('socket.io');
@@ -8,7 +9,8 @@ const {Server: HTTPServer} = require('http');
 const app = express();
 const httpServer = new HTTPServer(app)
 const io = new IOServer(httpServer)
-const chat = new Chat('./chat.json');
+const chat = require("./contenedorArchivo.js")
+const fakerRandom = require('./faker.js');
 // const {Router} = express;
 // const router = Router();
 
@@ -30,9 +32,10 @@ app.set('views', './views');
 
 
 
+
 io.on('connection',  async (socket) => {
-    const productos = await productosDB.getAll(); 
-    const mensajes = await mensajeria.getAll();
+    const productos =  fakerRandom() 
+    const mensajes = await chat.getAll();
     console.log
 
     console.log("Nueva conexion");
@@ -47,7 +50,7 @@ io.on('connection',  async (socket) => {
 
     socket.on('enviarMensaje', async (data) => {
         await mensajeria.save(data);
-        let mensajes = await mensajeria.getAll();
+        let mensajes = await chat.getAll();
         console.log(mensajes)
         io.sockets.emit("mensajes", mensajes);
     })
