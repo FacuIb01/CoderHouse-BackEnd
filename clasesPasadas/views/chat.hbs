@@ -1,0 +1,83 @@
+{{> header}}
+<br>
+<br>
+<form onsubmit="enviarMensaje()">
+
+  <div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">Email</span>
+  <input type="text" class="form-control" placeholder="Nombre del Producto" aria-label="Nombre Producto" aria-describedby="basic-addon1"  name="email" id="emailChat">
+</div>
+
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">Nombre</span>
+  <input type="text" class="form-control" placeholder="Nombre del Producto" aria-label="Nombre Producto" aria-describedby="basic-addon1"  name="nombre" id="nombreChat">
+</div>
+
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">Apellido</span>
+  <input type="text" class="form-control" placeholder="Nombre del Producto" aria-label="Nombre Producto" aria-describedby="basic-addon1"  name="apellido" id="apellidoChat">
+</div>
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">edad</span>
+  <input type="text" class="form-control" placeholder="Nombre del Producto" aria-label="Nombre Producto" aria-describedby="basic-addon1"  name="edad" id="edadChat">
+</div>
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">alias</span>
+  <input type="text" class="form-control" placeholder="Nombre del Producto" aria-label="Nombre Producto" aria-describedby="basic-addon1"  name="alias" id="aliasChat">
+</div>
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">avatar</span>
+  <input type="text" class="form-control" placeholder="Nombre del Producto" aria-label="Nombre Producto" aria-describedby="basic-addon1"  name="avatar" id="avatarChat">
+</div>
+
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">mensaje</span>
+  <input type="text" class="form-control" placeholder="Nombre del Producto" aria-label="Nombre Producto" aria-describedby="basic-addon1"  name="mensaje" id="mensaje">
+</div>
+
+
+<input type="submit" style="border: none; background-color: green; color:white">
+</form>
+
+<section id="contenedorChat">
+<h2>Canal de chat</h2>
+<article id="mensajesChat">
+
+</article>
+</section>
+
+<script type="text/javascript">
+        const socket = io()
+
+        socket.on("mensajes", (data) => {
+            const mensajes = document.getElementById("mensajesChat");
+            console.log(data)
+            const html = data.map((e) => {
+                return (`<div><strong style="color:blue">${e.autor}</strong><I style="color: green">${e.mensaje}</I></div>`)
+            }).join(" ");
+
+            mensajes.innerHTML = html;
+        });
+
+                const enviarMensaje = ()=>{
+            let email = document.getElementById("emailChat").value;
+            let nombre = document.getElementById("nombreChat").value
+            let apellido = document.getElementById("apellidoChat").value
+            let edad = document.getElementById("edadChat").value
+            let alias = document.getElementById("aliasChat").value
+            let avatar = document.getElementById("avatarChat").value
+            let mensaje = document.getElementById("mensaje").value
+            const author = {
+                email: email,
+                nombre: nombre,
+                apellido: apellido,
+                edad: edad,
+                alias: alias,
+                avatar: avatar,
+                }
+            const mensajes = {
+                mensaje: mensaje,
+            }
+            socket.emit("enviarMensaje", data);
+        }
+</script>

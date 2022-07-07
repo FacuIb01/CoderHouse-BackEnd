@@ -1,0 +1,68 @@
+{{>header }} 
+
+<br>
+<br>
+<form onsubmit="agregarProducto(this)" method="dialog">
+
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">Nombre Producto</span>
+  <input type="text" class="form-control" placeholder="Nombre del Producto" aria-label="Nombre Producto" aria-describedby="basic-addon1"  name="nombre" id="nombre">
+</div>
+
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">Precio Producto</span>
+  <input type="text" class="form-control" placeholder="Nombre del Producto" aria-label="Nombre Producto" aria-describedby="basic-addon1"  name="nombre" id="precio">
+</div>
+
+
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">URL Imagen </span>
+  <input type="text" class="form-control" placeholder="URl de la imagen" aria-label="Username" aria-describedby="basic-addon1" name="img" id="img">
+</div>
+
+<button type="submit" style="border: none; background-color: green; color:white">Agregar Producto</button>
+
+</form>
+
+    <table class="table">
+    <thead>   
+        <tr>
+        <th scope="col">id</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Imagen</th>
+        </tr>
+    <tbody id="productosLista">
+    </tbody>
+    </thead>
+    </table>
+
+    <script type="text/javascript">
+        const socket = io();
+            socket.on("productos", function(data){
+            const lista = document.getElementById("productosLista");
+            const html = data.map((e) => {
+                return (`<tr><th scope=""row"">${e.id}</th><td>${e.nombre}</td><td>${e.precio}</td><td><img src="${e.img}" alt="" style="width: 2rem"></td></tr>`)
+            }).join(" ")
+
+            lista.innerHTML = html;
+            })
+
+            const agregarProducto = () =>{
+            let nombre = document.getElementById("nombre").value;
+            let precio = document.getElementById("precio").value;
+            let img = document.getElementById("img").value;
+            const data = {
+                nombre: nombre,
+                precio: precio,
+                img: img
+            }
+            socket.emit("agregarProducto", data);
+        }
+
+    </script>
+
+
+
+
+
