@@ -1,0 +1,38 @@
+///levantar server con pm2 modo fork
+
+pm2 start serverPm2.js --name="serverFork" --watch -- 8080
+
+///levantar server con pm2 modo cluster
+
+pm2 start serverPm2.js --name="serverCluster" --watch -i max -- 8080
+
+///prueba de eliminar un fork de pm2
+
+taskkill /pid 25500 /f
+
+///listar de nuevo para ver que esten todos los servers levantados
+
+pm2 list
+
+
+///prueba eliminar un server cluster de pm2
+
+taskkil /pid 16360 /f
+
+
+///listar de nuevo para ver que esten todos los servers levantados
+
+pm2 list
+
+///levantar todos los server del 8082 al 8085 como cluster
+
+pm2 start serverPm2.js --name="server8081" --watch -i max -- 8081
+pm2 start serverPm2.js --name="server8082" --watch -i max -- 8082
+pm2 start serverPm2.js --name="server8082" --watch -i max -- 8083
+pm2 start serverPm2.js --name="server8083" --watch -i max -- 8084
+
+///levantar el server 8080 en modo fork para recibir el resto de consultas.
+
+pm2 start serverPm2.js --name="server8080" --watch -- 8080
+
+
