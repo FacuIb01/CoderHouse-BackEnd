@@ -1,0 +1,25 @@
+{{> header}}
+<section>
+{{#if usuario}}
+<div>
+    <h1>Bienvenido {{usuario}}</h1>    
+    <button id="logoutButton">Desloguearse</button>
+</div>
+
+{{else}}
+
+<form method="dialog">
+
+<div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">Indique su Usuario</span>
+    <input type="text" class="form-control" placeholder="Nombre del Producto" aria-label="Nombre Producto" aria-describedby="basic-addon1"  name="usuario" id="usuario">
+</div>
+
+<button id="login">Login</button>
+
+</form>
+{{/if}}
+
+
+
+</section>
