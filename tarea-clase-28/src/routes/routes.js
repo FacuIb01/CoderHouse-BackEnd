@@ -1,7 +1,8 @@
 const routerRandom = require("express").Router()
 const {fork} = require("child_process")
 const routerInfo = require("express").Router()
-const info = require("../utils/info")
+const {info, args} = require("../utils/info")
+
 
 
 routerInfo.get("/info", (req, res) => {
@@ -12,13 +13,20 @@ routerInfo.get("/info", (req, res) => {
 
 routerRandom.get("/random?", (req, res) => {
     const cant = req.query.cant ? req.query.cant : 100000000
-    const forket = fork("tarea-clase-27/src/utils/numeroRandom.js")
-    forket.send(cant)
-    forket.on("message", (data) => {
-        res.json({
-            random: data
+    if(args.server === "fork"){ //si iniciamos el servidor como fork 
+        const forket = fork("tarea-clase-27/src/utils/numeroRandom.js")
+        forket.send(cant)
+        forket.on("message", (data) => {
+            res.json({
+                random: data
+            })
         })
-    })
+    }else{ //si lo ejecutamos como cluster
+        const numeros = random(cant)
+        res.json({
+            random: numeros
+        })
+    }
 })
 
 

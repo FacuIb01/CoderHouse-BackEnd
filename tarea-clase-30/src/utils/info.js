@@ -10,10 +10,12 @@ const info = () => {
         Path: process.cwd(),
         Id: process.pid,
         Carpeta: process.title,
+        numCPUs: require("os").cpus().length,
+        Puerto: process.argv[2]
     }
 
     return objeto
 }
 
 
-module.exports = {info, args,}
+module.exports = {info, args}
