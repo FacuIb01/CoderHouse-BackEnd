@@ -53,6 +53,7 @@ if(args.server === "cluster"){ //se inicia el servidor como cluster si lo indica
 //middlewares
 app.use("/", routerRandom)
 app.use("/", routerInfo)
+app.use(express.static("C:/Users/Facu/Desktop/tareas BackEnd/Facundo Ibañez-clase 4/tarea-clase-30/src/public"))
 
 app.use(session({
     store: MongoStore.create({
@@ -208,7 +209,11 @@ router.get("/logout", (req, res) => {
 })
 
 //LOGIN
-
+router.get("/skere", (req, res) => {
+    res.json({
+        response: "mamahuevo?"
+    })
+})
 //REGISTER
 
 router.get("/signup", (req, res) => {

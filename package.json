@@ -1,4 +1,17 @@
 {
+  "proxy": "http://localhost:8080/",
+  "name": "clases",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "scripts": {
+    "test": "node tarea-clase-32/src/utils/benchmark.js",
+    "start": "0x C:/Users/Facu/Desktop/tareas-BackEnd/clases/tarea-clase-32/src/server.js"
+  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "connect-mongo": "^4.6.0",
@@ -9,6 +22,7 @@
     "express-session": "^1.17.3",
     "faker": "^5.5.3",
     "knex": "^2.0.0",
+    "log4js": "^6.6.0",
     "mongoose": "^6.4.1",
     "mysql": "^2.18.1",
     "normalizr": "^3.6.2",
@@ -17,6 +31,5 @@
     "socket.io": "^4.5.0",
     "sqlite3": "^5.0.8",
     "yargs": "^17.5.1"
-  },
-  "proxy": "http://localhost:8080/"
+  }
 }

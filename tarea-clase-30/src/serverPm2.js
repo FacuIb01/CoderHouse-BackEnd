@@ -41,6 +41,8 @@ USAR ESTE PARA FOREVER Y PM2
 app.use("/api/", routerRandom)
 app.use("/", routerInfo)
 
+app.use(reqMethod())
+
 app.use(session({
     store: MongoStore.create({
         mongoUrl: MONGO_URI,
@@ -232,6 +234,8 @@ function checkAuthentication(req, res, next) {
         res.redirect("/login");
     }
 }
+
+
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
